@@ -52,7 +52,7 @@ function App() {
     setTurn(newTurn);
 
     const newWinner = checkWinner(newBoard);
-
+z
     if (newWinner) {
       setWinner(newWinner)
     }
