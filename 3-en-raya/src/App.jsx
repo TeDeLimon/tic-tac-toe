@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import { checkWinner } from './Logic/board'
+import { checkWinner, checkEndGame } from './Logic/board'
+import confetti from 'canvas-confetti';
 
 // Declarar los turnos existentes, que corresponde a cada jugador
 const TURNS = {
@@ -61,11 +62,14 @@ function App() {
     const newWinner = checkWinner(newBoard);
 
     if (newWinner) {
+      confetti();
       setWinner(newWinner)
     }
 
     // Verificar si el juego ha terminado por sin posibilidad de movimientos
-    
+    if (checkEndGame(newBoard) && !newWinner) {
+      setWinner(false);
+    }
   }
 
   // Vamos a declarar que el turno por defecto, de la partida, es la X

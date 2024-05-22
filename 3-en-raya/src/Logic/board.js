@@ -20,6 +20,17 @@ export const checkWinner = (boardToCheck) => {
     return null;
 }
 
+/**
+ * Verifica si existen movimientos posibles en el tablero199
+ * 
+ * @param {Array} boardToCheck El tabler a verificar
+ * 
+ * @returns {Boolean} True si ya no existen movimientos
+ */
+export const checkEndGame = (boardToCheck) => {
+    return boardToCheck.every(square => square !== null);
+}
+
 export const checkWinner_2 = (boardToCheck) => {
 
     // Verificamos las filas (horizontales)
