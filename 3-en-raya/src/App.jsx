@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { checkWinner } from './Logic/board'
 
 // Declarar los turnos existentes, que corresponde a cada jugador
 const TURNS = {
@@ -22,16 +23,23 @@ const Square = ({ children, isSelected = false, updateBoard, index }) => {
   )
 }
 
+
+
 function App() {
 
   // Necesitamos un tablero que está conformado por 9 Casillas (Cuadrados - Square)
   // Simular un tablero: const boardFicticio = ['X', 'O', 'X', 'O', 'X', 'O', 'X', 'O', 'O']
   const [board, setBoard] = useState(Array(9).fill(null));
 
+  // Por defecto, el ganador es nadie (null)
+  const [winner, setWinner] = useState(null);
+
   // Vamos a crear una función que me permita cambiar el turno
   const updateBoard = (index) => {
 
-    console.log(index);
+    if (board[index]) return;
+
+    // Verificamos si el jugador actual ha ganado
 
     const newBoard = [...board];
 
@@ -42,6 +50,16 @@ function App() {
     const newTurn = (turn === TURNS.X) ? TURNS.O : TURNS.X;
 
     setTurn(newTurn);
+
+    const newWinner = checkWinner(newBoard);
+
+    if (newWinner) {
+      setWinner(newWinner)
+    }
+
+    // Verificar si el juego ha terminado por sin posibilidad de movimientos
+
+    // Resetear el juego
   }
 
   // Vamos a declarar que el turno por defecto, de la partida, es la X
@@ -69,7 +87,23 @@ function App() {
         <Square isSelected={turn === TURNS.X}>{TURNS.X}</Square>
         <Square isSelected={turn === TURNS.O}>{TURNS.O}</Square>
       </section>
+
+      {winner !== null && <section className='winner'>
+        <div className='text'>
+          <h2>{winner === false ? 'Empate' : 'Ganó '}</h2>
+
+          <header className='win'>
+            {winner && <Square>{winner}</Square>}
+          </header>
+
+          <footer>
+            <button onClick={resetGame}>Empezar de nuevo</button>
+          </footer>
+        </div>
+      </section>
+      }
     </main>
+
   )
 }
 
