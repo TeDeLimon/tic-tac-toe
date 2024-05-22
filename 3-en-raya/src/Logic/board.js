@@ -20,7 +20,6 @@ export const checkWinner = (boardToCheck) => {
     return null;
 }
 
-
 export const checkWinner_2 = (boardToCheck) => {
 
     // Verificamos las filas (horizontales)

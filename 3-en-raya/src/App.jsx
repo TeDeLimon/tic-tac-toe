@@ -34,6 +34,13 @@ function App() {
   // Por defecto, el ganador es nadie (null)
   const [winner, setWinner] = useState(null);
 
+  // Función reinicia el juego
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+  }
+
   // Vamos a crear una función que me permita cambiar el turno
   const updateBoard = (index) => {
 
@@ -52,14 +59,13 @@ function App() {
     setTurn(newTurn);
 
     const newWinner = checkWinner(newBoard);
-z
+
     if (newWinner) {
       setWinner(newWinner)
     }
 
     // Verificar si el juego ha terminado por sin posibilidad de movimientos
-
-    // Resetear el juego
+    
   }
 
   // Vamos a declarar que el turno por defecto, de la partida, es la X
@@ -68,6 +74,7 @@ z
   return (
     <main className='board'>
       <h1>Juega al 3 en raya</h1>
+      <button onClick={resetGame}>Reiniciar el juego</button>
 
       <section className='game'>
         {board.map((_, index) => {
